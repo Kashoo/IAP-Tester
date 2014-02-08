@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<string>com.kashoo.Test.IAP.Consumable</string>
-	<string>com.kashoo.Test.IAP.NonConsumable</string>
-	<string>com.kashoo.Test.IAP.AutoRenewable.Month</string>
-	<string>com.kashoo.Test.IAP.FreeSubscription</string>
-	<string>com.kashoo.Test.IAP.NonRenewingSubscription</string>
+	<string>com.kashoo.Test2.IAP.Consumable</string>
+	<string>com.kashoo.Test2.IAP.NonConsumable</string>
+	<string>com.kashoo.Test2.IAP.AutoRenewable.Month</string>
+	<string>com.kashoo.Test2.IAP.FreeSubscription</string>
+	<string>com.kashoo.Test2.IAP.NonRenewingSubscription</string>
 </array>
 </plist>
