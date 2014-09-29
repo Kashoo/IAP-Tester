@@ -268,7 +268,7 @@
 				GCC_PREFIX_HEADER = "IAP Tester/IAP Tester-Prefix.pch";
 				INFOPLIST_FILE = "IAP Tester/${TARGET_NAME}-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5F4E65C1-6235-4694-87F0-EC7D4730F36D";
+				PROVISIONING_PROFILE = "9da9683d-dfbc-4f88-adf0-952feb0cf82b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -282,7 +282,7 @@
 				GCC_PREFIX_HEADER = "IAP Tester/IAP Tester-Prefix.pch";
 				INFOPLIST_FILE = "IAP Tester/${TARGET_NAME}-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5F4E65C1-6235-4694-87F0-EC7D4730F36D";
+				PROVISIONING_PROFILE = "9da9683d-dfbc-4f88-adf0-952feb0cf82b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
