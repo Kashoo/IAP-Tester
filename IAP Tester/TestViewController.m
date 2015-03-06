@@ -7,13 +7,10 @@
 //
 
 #import "TestViewController.h"
-#import <StoreKit/StoreKit.h>
-#import <AudioToolbox/AudioToolbox.h>
+@import StoreKit;
+@import AVFoundation;
 
 @interface TestViewController() <SKProductsRequestDelegate, SKPaymentTransactionObserver, UITableViewDataSource, UITableViewDelegate>
-{
-    SystemSoundID oinkSoundID;
-}
 
 @property (nonatomic, weak) IBOutlet UITableView *purchaseTableView;
 
@@ -24,6 +21,7 @@
 
 @property (nonatomic, strong) NSArray *products;
 @property (nonatomic, strong) SKPaymentQueue *paymentQueue;
+@property (nonatomic, strong) AVAudioPlayer *oinkPlayer;
 
 @end
 
@@ -43,18 +41,18 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-    AudioServicesDisposeSystemSoundID(oinkSoundID);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+
     NSURL *oinkURL = [NSURL URLWithString:@"http://www.freesoundeffects.com/sounds1/pigs/pig.wav"];
     NSURL *localOinkURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"oink.wav"]];
     [[NSData dataWithContentsOfURL:oinkURL] writeToURL:localOinkURL options:NSDataWritingAtomic error:nil];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)localOinkURL, &self->oinkSoundID);
 
-    return;
+    self.oinkPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:localOinkURL error:nil];
+    [self.oinkPlayer prepareToPlay];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -92,8 +90,7 @@
 
 - (void)oinkAction:(id)sender
 {
-    AudioServicesPlaySystemSound(self->oinkSoundID);
-    return;
+    [self.oinkPlayer play];
 }
 
 #pragma mark UITableView data source and delegate
@@ -208,6 +205,8 @@
                     messageBody = [NSString stringWithFormat:@"Transaction %@ is a fresh new purchase.", transaction.transactionIdentifier];
                 }
 
+                NSLog(@"Here's the receipt:\n%@", transaction.transactionReceipt);
+
                 break;
             }
 
@@ -232,6 +231,13 @@
                 messageBody = [NSString stringWithFormat:@"Transaction %@ represents restoration of previous transaction %@ for %@.", transaction.transactionIdentifier, transaction.originalTransaction.transactionIdentifier, transaction.payment.productIdentifier];
                 NSLog(@"Restored transaction %@; original transaction %@", transaction, transaction.originalTransaction);
                 break;
+            }
+            
+            case SKPaymentTransactionStateDeferred:
+            {
+                messageTitle = @"Deferred Transaction";
+                messageBody = [NSString stringWithFormat:@"Transaction %@ is a deferred purchase.", transaction.transactionIdentifier];
+                NSLog(@"Deferred transaction %@", transaction.transactionIdentifier);
             }
         }
 
